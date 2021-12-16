@@ -9,7 +9,7 @@ export default class Searchbar extends Component {
   };
 
   handleInputChange = event => {
-    this.setState({ inputValue: event.currentTarget.value });
+    this.setState({ inputValue: event.currentTarget.value.toLowerCase() });
   };
 
   handleSubmit = event => {
@@ -25,6 +25,7 @@ export default class Searchbar extends Component {
         draggable: true,
         progress: undefined,
       });
+      this.props.onSubmit(this.state);
       return;
     }
 
