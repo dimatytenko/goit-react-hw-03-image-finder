@@ -7,6 +7,7 @@ import ImageGallery from 'components/ImageGallery';
 import Button from 'components/Button';
 import Loader from 'components/Loader';
 import Background from 'components/Background';
+import NotFound from 'components/NotFound';
 
 import scroll from 'react-scroll';
 const scrollToBottom = scroll.animateScroll.scrollToBottom;
@@ -43,10 +44,7 @@ export class PhotoInfo extends Component {
       .fetchPhotos(value, page)
       .then(photos => {
         if (photos.hits.length === 0) {
-          this.setState({
-            status: 'rejected',
-          });
-          return;
+          return Promise.reject(new Error(`${value} nothing to display`));
         }
         this.setState(prevState => ({
           photos: [...prevState.photos, ...photos.hits],
@@ -67,7 +65,7 @@ export class PhotoInfo extends Component {
   };
 
   render() {
-    const { photos, status } = this.state;
+    const { photos, status, error } = this.state;
 
     if (status === 'idle') {
       return (
@@ -87,7 +85,7 @@ export class PhotoInfo extends Component {
     if (status === 'rejected') {
       return (
         <div className={styles.Container}>
-          <h1>ERROR</h1>
+          <NotFound error={error.message} />
         </div>
       );
     }
