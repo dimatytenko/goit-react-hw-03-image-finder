@@ -18,12 +18,9 @@ export default class App extends Component {
 
   render() {
     return (
-      <div>
+      <div className={styles.App}>
         <Searchbar onSubmit={this.onSubmit} />
-
-        <div className={styles.App}>
-          <PhotoInfo value={this.state.searchValue} />
-        </div>
+        <PhotoInfo value={this.state.searchValue} />
         <ToastContainer />
       </div>
     );
